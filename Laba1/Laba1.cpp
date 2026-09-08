@@ -59,9 +59,9 @@ int main()
     int c = 1;
 
     std::cout << inputLen << std::endl;
-    std::cout << std::string(41 + inputLen, '—') << std::endl; // Верхний отступ от шапки в размере 43 дефисов
+    std::cout << std::string(41 + inputLen, '—') << std::endl; // Верхний отступ от шапки в размере 41+n дефисов
     std::cout << std::format("| {:>5} | {:>9} | {:>{}} | {:>8} |", "№п.п", "X", "A", inputLen + 6, "Y") << std::endl; // Форматирование шапки таблицы и значений
-    std::cout << std::string(41 + inputLen, '—') << std::endl; // Нижний отступ от шапки в размере 43 дефисов
+    std::cout << std::string(41 + inputLen, '—') << std::endl; // Нижний отступ от шапки в размере 41+n дефисов
 
     for (float x = -12; x <= 13; x += 2.5) {
         float y = F(x, a);
@@ -79,7 +79,7 @@ int main()
         std::string result = std::format("| {:>5} | {:>9.5f} | {:>{}.5f} | {:>8} |", c, x, a, inputLen + 6, toInsert); // Форматирование каждой ячейки таблицы
 
         std::cout << result << std::endl;
-        std::cout << std::string(41 + inputLen, '—') << std::endl; // Очередной отступ из 43 дефисов
+        std::cout << std::string(41 + inputLen, '—') << std::endl; // Очередной отступ из 41+n дефисов
         c++;
     }
 
