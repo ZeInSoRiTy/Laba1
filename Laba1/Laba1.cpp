@@ -1,7 +1,4 @@
-﻿// Laba1.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
-
-#include <iostream>
+﻿#include <iostream>
 #include <math.h>
 #include <string>
 #include <format>
@@ -19,6 +16,7 @@ int main()
 
     float a = 0;
     std::string input;
+    int inputLen = 0;
 
     std::cin.clear();
         
@@ -41,15 +39,18 @@ int main()
             }
             else
             {
+                for (char c : std::to_string(a))
+                {
+                    if (c == '-') continue;
+                    if (c == '.') break;
+                    inputLen++;
+                }
+
                 break;
             }
         }
         catch (const std::invalid_argument& e) {
             std::cout << "Не число." << std::endl;
-        }
-        catch (const std::out_of_range& e) {
-            std::cout << "Слишком большое или слишком маленькое число для float." << std::endl;
-
         }
 
 
@@ -57,16 +58,17 @@ int main()
 
     int c = 1;
 
-    std::cout << std::string(43, '—') << std::endl; // Верхний отступ от шапки в размере 43 дефисов
-    std::cout << std::format("| {:>5} | {:>9} | {:>8} | {:>8} |", "№п.п", "X", "A", "Y") << std::endl; // Форматирование шапки таблицы и значений
-    std::cout << std::string(43, '—') << std::endl; // Нижний отступ от шапки в размере 43 дефисов
+    std::cout << inputLen << std::endl;
+    std::cout << std::string(41 + inputLen, '—') << std::endl; // Верхний отступ от шапки в размере 43 дефисов
+    std::cout << std::format("| {:>5} | {:>9} | {:>{}} | {:>8} |", "№п.п", "X", "A", inputLen + 6, "Y") << std::endl; // Форматирование шапки таблицы и значений
+    std::cout << std::string(41 + inputLen, '—') << std::endl; // Нижний отступ от шапки в размере 43 дефисов
 
     for (float x = -12; x <= 13; x += 2.5) {
         float y = F(x, a);
 
         std::string toInsert;
 
-        if (std::isnan(y)) {
+        if (!std::isfinite(y)) {
             toInsert = "—N/A-";
         }
         else
@@ -74,23 +76,12 @@ int main()
             toInsert = std::format("{:.5f}", y);
         }
 
-        std::string result = std::format("| {:>5} | {:>9.5f} | {:>8.5f} | {:>8} |", c, x, a, toInsert); // Форматирование каждой ячейки таблицы
+        std::string result = std::format("| {:>5} | {:>9.5f} | {:>{}.5f} | {:>8} |", c, x, a, inputLen + 6, toInsert); // Форматирование каждой ячейки таблицы
 
         std::cout << result << std::endl;
-        std::cout << std::string(43, '—') << std::endl; // Очередной отступ из 43 дефисов
+        std::cout << std::string(41 + inputLen, '—') << std::endl; // Очередной отступ из 43 дефисов
         c++;
     }
 
     return 0;
 }
-
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
-
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
