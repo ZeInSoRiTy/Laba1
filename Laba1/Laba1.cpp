@@ -3,6 +3,7 @@
 #include <string>
 #include <format>
 #include <windows.h>
+#include <regex>
 
 float F(float x, float a) // Функция F(x)
 {
@@ -16,6 +17,9 @@ int main()
 
     float a = 0;
     std::string input;
+
+    std::regex validate(R"(^(0|-?[1-9]\d*)(\.\d+)?$)");
+
     int inputLen = 0;
 
     std::cin.clear();
@@ -24,6 +28,12 @@ int main()
     while (true) {
 
         std::cin >> input;
+
+        if (!std::regex_match(input, validate)) {
+            std::cout << "Неверный формат входных данных" << std::endl;
+            continue;
+        }
+
 
         try { // Кэтчер исключений
             a = std::stof(input);
